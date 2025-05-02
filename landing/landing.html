@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Droneorzo - Ultraportable Drones</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: white;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #5cc9c9;
+        }
+        
+        .logo-icon {
+                    width: 280px; 
+                    padding: 0.5rem;
+                    border-radius: 50%;
+                    margin-right: 10rem;
+        }
+        
+        .nav-center {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-center li {
+            position: relative;
+        }
+        
+        .nav-center a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-center a:hover {
+            color: #5cc9c9;
+        }
+        
+        .active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            background-color: #5cc9c9;
+            border-radius: 50%;
+        }
+        
+        .nav-right {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            color: #5cc9c9;
+            opacity: 0.9;
+        }
+        
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            padding: 2rem 5% 4rem;
+            min-height: 70vh;
+            position: relative;
+        }
+        
+        .hero-content {
+            width: 50%;
+            padding-right: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #000;
+            text-transform: uppercase;
+        }
+        
+        .hero p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 450px;
+        }
+        
+        .buy-btn {
+            background-color: #5cc9c9;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 3rem;
+        }
+        
+        .buy-btn:hover {
+            background-color: #4ab5b5;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            border-top: 1px solid #eee;
+            padding-top: 2rem;
+        }
+        
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5cc9c9;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background-color: #5cc9c9;
+            color: white;
+            border-color: #5cc9c9;
+        }
+        
+        .drone-image-container {
+            position: relative;
+            width: 50%;
+        }
+        
+        .circle-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(92, 201, 201, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .drone-image {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 500px;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        /* Slider Dots */
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dot.active {
+            background-color: #5cc9c9;
+        }
+        
+        /* About Section */
+        .about {
+            display: flex;
+            padding: 4rem 5%;
+            background-color: #f9f9f9;
+            border-radius: 2rem 0 0 0;
+        }
+        
+        .about-image-container {
+            width: 45%;
+            position: relative;
+            border-radius: 2rem;
+            overflow: hidden;
+        }
+        
+        .about-image {
+            width: 100%;
+            display: block;
+            border-radius: 2rem;
+        }
+        
+        .about-content {
+            width: 55%;
+            padding-left: 5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .about h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: #000;
+        }
+        
+        .about p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 450px;
+            line-height: 1.7;
+        }
+        
+        .explore-btn {
+            background-color: #5cc9c9;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: fit-content;
+        }
+        
+        .explore-btn:hover {
+            background-color: #4ab5b5;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-content {
+                padding-left: 3rem;
+            }
+        }
+        
+        /* Features Section Styles */
+        .features {
+            padding: 5rem 0;
+            background-color: #fff;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 0.9rem;
+        }
+        
+        .features-diagram {
+            position: relative;
+            margin: 3rem auto;
+            max-width: 800px;
+        }
+        
+        .drone-diagram {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+        
+        .feature-point {
+            position: absolute;
+            max-width: 250px;
+        }
+        
+        .feature-point h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+        
+        .feature-point p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .point-robust {
+            top: 20%;
+            left: 5%;
+        }
+        
+        .point-recording {
+            bottom: 20%;
+            left: 5%;
+        }
+        
+        .point-disassembly {
+            top: 20%;
+            right: 5%;
+        }
+        
+        .point-technology {
+            bottom: 20%;
+            right: 5%;
+        }
+        
+        /* Camera Section Styles */
+        .camera-section {
+            padding: 5rem 0;
+            background-color: #f9f9f9;
+        }
+        
+        .camera-section .container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .camera-content {
+            width: 50%;
+            padding-right: 2rem;
+        }
+        
+        .camera-section .section-title {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+        
+        .camera-section p {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+        
+        .camera-stats {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #666;
+        }
+        
+        .camera-image {
+            width: 50%;
+        }
+        
+        .drone-camera {
+            max-width: 100%;
+            display: block;
+        }
+        
+        /* Surveys Section Styles */
+        .surveys-section {
+            padding: 5rem 0;
+            background-color: #fff;
+        }
+        
+        .stats-grid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+        
+        .stat-box {
+            text-align: center;
+            width: 23%;
+        }
+        
+        .stat-box .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #000;
+        }
+        
+        .stat-box .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #666;
+        }
+        
+        /* Services Section Styles */
+        .services-section {
+            padding: 5rem 0;
+            background-color: #f9f9f9;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .service-card {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .service-number {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #5cc9c9;
+        }
+        
+        .service-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.3rem;
+        }
+        
+        .service-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .service-features {
+            list-style: none;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .service-features li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Team Section Styles */
+        .team-section {
+            padding: 5rem 0;
+            background-color: #fff;
+        }
+        
+        .team-grid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+        
+        .team-member {
+            width: 32%;
+            text-align: center;
+        }
+        
+        .member-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 0.3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .member-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .member-position {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .member-social {
+            font-size: 0.8rem;
+            color: #999;
+        }
+        
+        /* Testimonials Section Styles */
+        .testimonials-section {
+            padding: 5rem 0;
+            background-color: #f9f9f9;
+        }
+        
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 3rem auto 0;
+            text-align: center;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 2rem;
+        }
+        
+        .testimonial-content p {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .author-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .author-name {
+            font-weight: 600;
+        }
+        
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .testimonial-dots .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .testimonial-dots .dot.active {
+            background-color: #5cc9c9;
+        }
+        
+        /* Footer Styles */
+        .footer {
+            background-color: #f5f5f5;
+            padding: 5rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <img src="/Users/bankimkamila/Desktop/Screenshot 2025-05-02 at 4.44.32 PM.png" alt="Logo" class="logo-icon">
+        </div>
+        <ul class="nav-center">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Shop</a></li>
+            <li><a href="#">Product</a></li>
+            <li><a href="#">Pages</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="file:///Users/bankimkamila/html/pacticise/landingsingup.html">Sign Up</a></li> <!-- Added Sign Up link -->
+        </ul>
+        <div class="nav-right">
+            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+        </div>
+​
+
+
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>The Ultraportable Drone For The Best Video</h1>
+            <p>DJI Action 2 isn't just ultra-versatile, it's also our most powerful action camera yet The innovative magnetic.</p>
+            <button class="buy-btn">Buy Now</button>
+            
+            <div class="social-icons">
+                <div class="social-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                    </svg>
+                </div>
+                <div class="social-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                    </svg>
+                </div>
+                <div class="social-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                    </svg>
+                </div>
+                <div class="social-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        
+        <div class="drone-image-container">
+            <div class="circle-bg"></div>
+            <img src="/Users/bankimkamila/Downloads/The Best Affordable Drone for Families.jpeg" alt="DJI Drone" class="drone-image">
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about">
+        <div class="about-image-container">
+            <img src="/Users/bankimkamila/Downloads/_.jpeg" alt="Person with Drone" class="about-image">
+        </div>
+        
+        <div class="about-content">
+            <h2>WE HELP YOU EMBRACE THE FUTURE</h2>
+            <p>Since 2005, our team of drone experts have advised, built, and supplied drones all over the US. We're your one-stop shop for everything related to remote control aircraft.</p>
+            <button class="explore-btn">Explore</button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">CREATE A HIGHLY VISIBLE</h2>
+            <p class="section-subtitle">Composite polymeric materials having controllability and superior characteristics/properties</p>
+
+            <div class="features-diagram">
+                <img src="/Users/bankimkamila/Downloads/DJI - Official Website.jpeg" alt="Drone Diagram" class="drone-diagram">
+                
+                <div class="feature-point point-robust">
+                    <h3>ROBUST STRUCTURE</h3>
+                    <p>Withstands tough winds and poor storage over the years</p>
+                </div>
+                
+                <div class="feature-point point-recording">
+                    <h3>HD VIDEO RECORDING</h3>
+                    <p>High-quality flight recordings with 4K perfection</p>
+                </div>
+                
+                <div class="feature-point point-disassembly">
+                    <h3>SIMPLE DISASSEMBLY</h3>
+                    <p>Ready to be repaired/upgraded on-site</p>
+                </div>
+                
+                <div class="feature-point point-technology">
+                    <h3>ADVANCED TECHNOLOGY</h3>
+                    <p>Cutting-edge features with increased precision</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Camera Section -->
+    <section class="camera-section">
+        <div class="container">
+            <div class="camera-content">
+                <h2 class="section-title">CAMERA</h2>
+                <p>PTZ camera includes a zoom lens that controls and coordinates additional movements and is highly sensitive. It works well in low light and captures multiple frames per second on average.</p>
+                
+                <div class="camera-stats">
+                    <div class="stat">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-number">9</div>
+                        <div class="stat-label">MIN FLIGHT</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-icon">📷</div>
+                        <div class="stat-number">30</div>
+                        <div class="stat-label">4K VIDEO</div>
+                    </div>
+                </div>
+            </div>
+            <div class="camera-image">
+                <img src="/Users/bankimkamila/Downloads/fc85037d05f15b64a3259f08c13d990a.jpg" alt="Drone Camera" class="drone-camera">
+            </div>
+        </div>
+    </section>
+
+    <!-- Surveys Section -->
+    <section class="surveys-section">
+        <div class="container">
+            <h2 class="section-title">SUCCESSFUL AERIAL SURVEYS</h2>
+            <p class="section-subtitle">Over-the-nose applications for flights</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">80</div>
+                    <div class="stat-label">SATISFIED CLIENTS</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">65</div>
+                    <div class="stat-label">PROJECTS DONE</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">25</div>
+                    <div class="stat-label">FLIGHT TIME</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">92%</div>
+                    <div class="stat-label">DRONE PRODUCTIVITY</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="container">
+            <h2 class="section-title">FEATURED SERVICES</h2>
+            <p class="section-subtitle">Over-the-nose applications for flights</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-number">1.</div>
+                    <img src="/Users/bankimkamila/Downloads/dji-air-3-drone-camera.png" alt="Property Tours" class="service-image">
+                    <h3 class="service-title">PROPERTY TOURS</h3>
+                    <ul class="service-features">
+                        <li>Commercial Real Estate</li>
+                        <li>Residential Properties</li>
+                        <li>Country Clubs/Golf Courses</li>
+                        <li>Custom Consulting</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-number">2.</div>
+                    <img src="/Users/bankimkamila/Downloads/Drone-only-2-825x465.png" alt="360 VR" class="service-image">
+                    <h3 class="service-title">360 VR</h3>
+                    <ul class="service-features">
+                        <li>Virtual Showrooms</li>
+                        <li>Landmarks and Cityscapes</li>
+                        <li>Businesses and Complexes</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-number">3.</div>
+                    <img src="/Users/bankimkamila/Downloads/25 Tips and Tricks for Your New DJI Mavic Mini.jpeg" alt="Event Coverage" class="service-image">
+                    <h3 class="service-title">EVENT COVERAGE</h3>
+                    <ul class="service-features">
+                        <li>Weddings</li>
+                        <li>Outdoor Corporate Events</li>
+                        <li>Ceremonies</li>
+                        <li>Sports Events</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-number">4.</div>
+                    <img src="/Users/bankimkamila/Downloads/bb3c92d8e8f1e98f48824fb07820b966.jpg" alt="Photography" class="service-image">
+                    <h3 class="service-title">PHOTOGRAPHY</h3>
+                    <ul class="service-features">
+                        <li>Website Photos</li>
+                        <li>Instagram Lifestyle</li>
+                        <li>Professional Quality</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title">OUR DEDICATED TEAM</h2>
+            <p class="section-subtitle">Aerial Photography</p>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="/api/placeholder/300/300" alt="Carol L. Curtis" class="member-image">
+                    <h3 class="member-name">Carol L. Curtis</h3>
+                    <p class="member-position">Director</p>
+                    <div class="member-social">
+                        <span>Instagram</span> • <span>Twitter</span> • <span>LinkedIn</span>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="/api/placeholder/300/300" alt="Stephen Humbert" class="member-image">
+                    <h3 class="member-name">Stephen Humbert</h3>
+                    <p class="member-position">Photographer</p>
+                    <div class="member-social">
+                        <span>Instagram</span> • <span>Twitter</span> • <span>LinkedIn</span>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="/api/placeholder/300/300" alt="Randall C. Hoffman" class="member-image">
+                    <h3 class="member-name">Randall C. Hoffman</h3>
+                    <p class="member-position">Pilot</p>
+                    <div class="member-social">
+                        <span>Facebook</span> • <span>Twitter</span> • <span>LinkedIn</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">What Our Clients Say</h2>
+            
+            <div class="testimonial-slider">
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"I appreciate your amazing service and professionalism that hit all your goals every time. I recommend you to everyone I know because I simply love what you guys deliver."</p>
+                        <div class="testimonial-author">
+                            <img src="/api/placeholder/50/50" alt="Client" class="author-image">
+                            <div class="author-name">Sharlto J. Hall</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Products</h3>
+                        <ul>
+                            <li><a href="#">Drones</a></li>
+                            <li><a href="#">Cameras</a></li>
+                            <li><a href="#">Accessories</a></li>
+                            <li><a href="#">Software</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">Aerial Photography</a></li>
+                            <li><a href="#">Property Tours</a></li>
+                            <li><a href="#">Event Coverage</a></li>
+                            <li><a href="#">Training</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Our Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-subscribe">
+                    <h3>Stay Updated</h3>
+                    <p>Subscribe to our newsletter for the latest updates and offers.</p>
+                    <form class="subscribe-form">
+                        <input type="email" placeholder="Your email address">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 Droneorzo. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
